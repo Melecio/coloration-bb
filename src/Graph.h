@@ -1,5 +1,6 @@
 #include <vector>
 #include <cstddef>
+#include <iostream>
 #include "Node.h"
 
 #ifndef GRAPH_H
@@ -17,6 +18,8 @@ class Graph {
         ~Graph();
 
         size_t size();
+        void addEdge(int, int);
+        std::string toString();
 };
 
 #endif // GRAPH_H

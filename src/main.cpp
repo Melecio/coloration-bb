@@ -1,12 +1,21 @@
 #include <iostream>
+#include <cstdlib>
+#include "utils.h"
 #include "Graph.h"
 
 
-int main() {
-    Graph a = Graph(10000000);
-    // Graph b;
+int main(int argc, char *argv[]) {
 
-    std::cout << a.size() << std::endl;
-    // std::cout << b.size() << std::endl;
+    if (argc != 2) {
+        std::cout << "TODO print usage" << std::endl;
+        exit(1);
+    }
+
+    Graph *g = parse_DIMACS(argv[1]);
+    if (g == NULL) exit(1);
+
+    std::cout << g->toString() << std::endl;
+
+    delete g;
 }
 
