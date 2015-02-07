@@ -10,7 +10,7 @@
  */
 class Graph {
     private:
-        std::vector<Node*> nodes;
+        std::vector<Node*> *nodes;
     public:
         Graph();
         Graph(unsigned);

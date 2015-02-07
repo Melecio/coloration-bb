@@ -1,5 +1,5 @@
 GCC=g++
-FLAGS=-std=c++11 -Wall
+FLAGS=-std=c++11 -Wall -g
 
 all: *.cpp
 	$(GCC) $(FLAGS) -c *.cpp

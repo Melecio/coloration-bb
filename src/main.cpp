@@ -3,7 +3,7 @@
 
 
 int main() {
-    Graph a(10000000);
+    Graph a = Graph(10000000);
     // Graph b;
 
     std::cout << a.size() << std::endl;
