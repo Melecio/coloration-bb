@@ -14,7 +14,7 @@ class Graph {
         std::vector<Node*> *nodes;
     public:
         Graph();
-        Graph(unsigned);
+        Graph(int);
         ~Graph();
 
         std::vector<Node*> *getNodes();

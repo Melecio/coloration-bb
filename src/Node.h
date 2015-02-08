@@ -1,4 +1,5 @@
 #include <map>
+#include <vector>
 
 #ifndef NODE_H
 #define NODE_H
@@ -7,13 +8,15 @@ class Node {
     private:
         int id;
         int degree;
+        int uncol_degree = 0;
         int satur_degree = 0;
         int color = -1;  // -1 means it has not been colored yet
         std::map<int,Node*> *adjecents;
+        std::vector<bool> *colors;
     public:
         Node() = default;
         Node(int);
-        Node(int, int);
+        Node(int, int, int);
         ~Node();
 
         /**
@@ -32,11 +35,14 @@ class Node {
 
         int getColor();
 
-        void setColor(int);
+        int setColor();
 
         int getUncolDegree();
 
         int getSaturDegree();
+
+        void setSaturation(int color);
+
 
         void addAdjacent(Node *);
 

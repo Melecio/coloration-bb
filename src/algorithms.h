@@ -4,15 +4,15 @@
 #define ALGORITHMS_H
 
 struct DsaturData {
-    int w;
+    int r;
+    std::vector<Node*> *col_order;
 };
 
-bool dsatur_compare(Node *a, Node *b) {
-    if (a->getSaturDegree() != b->getSaturDegree()) {
-        return a->getSaturDegree() < b->getSaturDegree();
-    } else {
-        return a->getUncolDegree() < b->getUncolDegree();
-    }
-}
+DsaturData dsatur(Graph *);
+
+bool degree_compare(Node *, Node *);
+
+bool dsatur_compare(Node *, Node *);
+
 
 #endif // ALGORITHMS_H

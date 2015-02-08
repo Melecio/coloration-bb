@@ -8,14 +8,14 @@ Graph::Graph() {
     // std::cout << this->nodes.size() << std::endl;
 }
 
-Graph::Graph(unsigned size) {
+Graph::Graph(int size) {
     // this->nodes.reserve(size);
     // for(unsigned i = 0; i < size; ++i) {
     //     this->nodes.push_back(new Node(0));
     // }
     this->nodes = new std::vector<Node*>();
-    for(unsigned i = 0; i < size; ++i) {
-        this->nodes->push_back(new Node(0, i));
+    for(int i = 0; i < size; ++i) {
+        this->nodes->push_back(new Node(0, i, size));
     }
 }
 
