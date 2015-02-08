@@ -14,5 +14,8 @@ bool degree_compare(Node *, Node *);
 
 bool dsatur_compare(Node *, Node *);
 
+int get_clique_size(DsaturData d);
+
+void Brelaz(Graph *graph, DsaturData data) {
 
 #endif // ALGORITHMS_H

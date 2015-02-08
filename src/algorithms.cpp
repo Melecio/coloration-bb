@@ -55,3 +55,18 @@ bool dsatur_compare(Node *a, Node *b) {
     }
 }
 
+
+int get_clique_size(DsaturData data) {
+    std::vector<Node*> *nodes = data.col_order;
+    int d = 1;
+
+    for(; d < nodes->size() and
+        (*nodes)[d-1]->getColor() < (*nodes)[d]->getColor(); ++d);
+
+    return d;
+}
+
+
+void Brelaz(Graph *graph, DsaturData data) {
+
+}
