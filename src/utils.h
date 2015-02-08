@@ -6,6 +6,12 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+/**
+ * Parses the input file that should be on DIMACS format and builds the
+ * corresponding graph representint the problem.
+ * @param  file_name file in DIMACS format.
+ * @return           A pointer to an object of Graph class or NULL if errors.
+ */
 Graph *parse_DIMACS(std::string file_name) {
 
     std::ifstream file(file_name);
@@ -27,14 +33,14 @@ Graph *parse_DIMACS(std::string file_name) {
             case '\n':
             case '\0':
                 break;
-            case 'p':
+            case 'p':  // The problem description is found
                 {
                     std::istringstream stream(line);
                     stream >> line_label >> pr_type >> nodes  >> edges;
                     g = new Graph(nodes);
                     break;
                 }
-            case 'e':
+            case 'e':  // Edge description is found
                 {
                     // std::cout << line << std::endl;
                     std::istringstream stream(line);

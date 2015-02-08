@@ -7,7 +7,8 @@ class Node {
     private:
         int id;
         int degree;
-        int color = -1;
+        int satur_degree = 0;
+        int color = -1;  // -1 means it has not been colored yet
         std::map<int,Node*> *adjecents;
     public:
         Node() = default;
@@ -15,10 +16,16 @@ class Node {
         Node(int, int);
         ~Node();
 
+        /**
+         * Returns the number of nodes adjacent this node
+         * @return number of nodes adjacent
+         */
         int getDegree();
 
-        void setDegree(int);
-
+        /**
+         * Returns the ID of this node
+         * @return the ID of this node
+         */
         int getId();
 
         void setId(int);
@@ -27,11 +34,19 @@ class Node {
 
         void setColor(int);
 
+        int getUncolDegree();
+
+        int getSaturDegree();
+
         void addAdjacent(Node *);
 
+        /**
+         * Returns printable information about the node and its adjacent nodes
+         * @return A string with all the information
+         */
         std::string toString();
 
-        Node* getFirstAdjecent();
+        bool isColored();
 };
 
 #endif // NODE_H

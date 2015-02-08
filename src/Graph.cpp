@@ -29,6 +29,8 @@ Graph::~Graph() {
     delete this->nodes;
 }
 
+std::vector<Node*> *Graph::getNodes() { return this->nodes; }
+
 size_t Graph::size() {
     return this->nodes->size();
 }

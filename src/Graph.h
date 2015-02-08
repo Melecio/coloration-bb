@@ -17,6 +17,8 @@ class Graph {
         Graph(unsigned);
         ~Graph();
 
+        std::vector<Node*> *getNodes();
+
         size_t size();
         void addEdge(int, int);
         std::string toString();

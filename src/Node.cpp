@@ -18,15 +18,28 @@ Node::~Node() {
 
 int Node::getDegree() { return this->degree; }
 
-void Node::setDegree(int degree) { this->degree = degree; }
-
 int Node::getId() { return this->id; }
 
 void Node::setId(int id) { this->id = id; }
 
 int Node::getColor() { return this->color; }
 
+int Node::getSaturDegree() { return this->satur_degree; }
+
 void Node::setColor(int color) { this->color = color; }
+
+int Node::getUncolDegree() {
+    int uncol_degree = 0;
+    std::map<int,Node*>::iterator it = this->adjecents->begin();
+
+    for(; it != this->adjecents->end(); ++it) {
+        Node *current_node = it->second;
+        if (!current_node->isColored())
+            uncol_degree++;
+    }
+
+    return uncol_degree;
+}
 
 void Node::addAdjacent(Node *a) {
     std::pair<std::map<int,Node*>::iterator,bool> ret;
@@ -34,13 +47,14 @@ void Node::addAdjacent(Node *a) {
     if (!ret.second) {
         std::cout << "Error inserting element into map" << std::endl;
     }
+    this->degree++;
 }
 
 std::string Node::toString() {
     std::string str = "";
 
     str += "Nodo #" + std::to_string(this->id+1) + "\n";
-    str += "    con " + std::to_string(this->adjecents->size()) + " vecinos:\n";
+    str += "    con " + std::to_string(this->degree) + " vecinos:\n";
 
     std::map<int,Node*>::iterator it = this->adjecents->begin();
     for(; it != this->adjecents->end(); ++it) {
@@ -51,9 +65,4 @@ std::string Node::toString() {
     return str;
 }
 
-Node* Node::getFirstAdjecent() {
-    Node *a = this->adjecents->begin()->second;
-
-    return a;
-}
-
+bool Node::isColored() { return this->color != -1; }
