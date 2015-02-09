@@ -80,7 +80,7 @@ std::vector<int> *get_Uxk(std::vector<Node *> *nodes, int k, int imin) {
     for (; it != adj->end(); ++it) {
         int color = (*it).second->getColor();
         if (color <= imin)
-            (*aux)[ ((*it).second)->getColor() ] = -1;
+            (*aux)[ color ] = -1;
     }
 
     std::vector<int> *Uxk = new std::vector<int>();
@@ -118,15 +118,21 @@ int Brelaz(Graph *graph, DsaturData data) {
     std::vector< std::vector<int> *> *nodes_uxk = new std::vector< std::vector<int> *>();
     nodes_uxk->assign(graph->size(), NULL);
 
+
     //labels for every node
     //use it with node->getId() like labels[ node->getId() ]
     std::vector<bool> *labels = new std::vector<bool>();
     labels->assign(graph->size(), false);
 
+    for (int i = 0; i < w; i++) (*labels)[ (*nodes)[i]->getId() ] = true;
+
+    int max_colors = q;
+
+    assert(graph->size()==nodes->size());
+
     while (1) {
         //this is for taking track of the amount of colors used
         //which is the maximum color used
-        int max_colors = q;
 
         assert(k < graph->size());
         assert(k >= 0);
@@ -150,24 +156,24 @@ int Brelaz(Graph *graph, DsaturData data) {
         }
         std::vector<int> *Uxk = (*nodes_uxk)[k];
 
-        sort(Uxk->begin(), Uxk->end());
-
         if (! Uxk->empty()) {
+            sort(Uxk->begin(), Uxk->end());
             max_colors = std::max(max_colors, Uxk->front());
-
             (*nodes)[k]->setColor( Uxk->front() );    //the color is the minimal of all the colors
             k = k + 1;
             int sz = graph->size();
             if (k == sz) {  //not k > n, because colored nodes goes from 0..n-1
-                int mm = -1;
+                q = -1;
                 for (int i = 0; i < nodes->size(); i++) 
-                    mm = std::max(mm, (*nodes)[i]->getColor());
-                assert(mm==max_colors);
-                q = mm;
+                    q = std::max(q, (*nodes)[i]->getColor());
+
+                assert(q==max_colors);
+
                 if (q == w) return q; 
                 k = 0;  //determine k as the minimal rank among all q-colored
                 for (; k < sz && (*nodes)[k]->getColor() != q; k++);
-                for (int i = k; i < sz; i++) (*labels)[ (*nodes)[i]->getId() ] = -1;
+                for (int i = k; i < sz; i++) (*labels)[ (*nodes)[i]->getId() ] = false;
+                back = true;
             } else {
                 back = false;
             }
