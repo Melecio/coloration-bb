@@ -17,3 +17,4 @@ test
 # Sublime project files
 *.sublime*
 
+run_coloration.sh
