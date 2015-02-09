@@ -126,10 +126,9 @@ int Brelaz(Graph *graph, DsaturData data) {
 
     for (int i = 0; i < w; i++) (*labels)[ (*nodes)[i]->getId() ] = true;
 
-    int max_colors = q;
-
     assert(graph->size()==nodes->size());
 
+    q = nodes->size();
     while (1) {
         //this is for taking track of the amount of colors used
         //which is the maximum color used
@@ -158,7 +157,6 @@ int Brelaz(Graph *graph, DsaturData data) {
 
         if (! Uxk->empty()) {
             sort(Uxk->begin(), Uxk->end());
-            max_colors = std::max(max_colors, Uxk->front());
             (*nodes)[k]->setColor( Uxk->front() );    //the color is the minimal of all the colors
             k = k + 1;
             int sz = graph->size();
@@ -166,8 +164,6 @@ int Brelaz(Graph *graph, DsaturData data) {
                 q = -1;
                 for (int i = 0; i < nodes->size(); i++) 
                     q = std::max(q, (*nodes)[i]->getColor());
-
-                assert(q==max_colors);
 
                 if (q == w) return q; 
                 k = 0;  //determine k as the minimal rank among all q-colored
