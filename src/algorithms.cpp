@@ -128,6 +128,7 @@ int Brelaz(Graph *graph, DsaturData data) {
 
     assert(graph->size()==nodes->size());
 
+    q = nodes->size();
     while (1) {
         //this is for taking track of the amount of colors used
         //which is the maximum color used
