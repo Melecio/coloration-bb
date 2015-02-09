@@ -10,7 +10,7 @@ Node::Node(int degree, int id, int max_colors) {
     this->degree = degree;
     this->id = id;
     this->adjecents = new std::map<int,Node*>();
-    this->colors    = new std::vector<bool>(max_colors, false);
+    this->colors    = new std::vector<bool>(max_colors+1, false);
 }
 
 Node::~Node() {
@@ -31,9 +31,9 @@ std::map<int, Node*> *Node::getAdjacents() { return this->adjecents; }
 int Node::getSaturDegree() { return this->satur_degree; }
 
 int Node::setColor() {
-    int color = -1;
+    int color = 0;
 
-    std::vector<bool>::iterator it = this->colors->begin();
+    std::vector<bool>::iterator it = this->colors->begin()+1;
     for(; it != this->colors->end(); ++it) {
         color++;
         if (!(*it)) {
@@ -90,7 +90,7 @@ std::string Node::toString() {
     std::string str = "";
 
     str += "Nodo #" + std::to_string(this->id+1) + "\n";
-    str += "    con color: " + std::to_string(this->color+1) + "\n";
+    str += "    con color: " + std::to_string(this->color) + "\n";
     str += "    con grado de saturacion: " + std::to_string(this->satur_degree) + "\n";
     str += "    con uncol degre: " + std::to_string(this->uncol_degree) + "\n";
     str += "    con " + std::to_string(this->degree) + " vecinos:\n";

@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
     //     std::cout << (*col_order)[i]->toString() << std::endl;
     // }
 
-    std::cout << get_clique_size(data) << std::endl;
+    // std::cout << get_clique_size(data) << std::endl;
 
     Brelaz(g, data);
 
