@@ -112,7 +112,7 @@ int Brelaz(Graph *graph, DsaturData data) {
     std::vector<Node*> *nodes = data.col_order;
     int w = get_clique_size(data); //number of vertex of the clique
     int q = data.r;   //max color used
-    if (q == w) return q;
+    if (q == w) return q; 
     int k = w;        //because indexed in 0
     bool back = false;
     std::vector< std::vector<int> *> *nodes_uxk = new std::vector< std::vector<int> *>();
@@ -159,8 +159,12 @@ int Brelaz(Graph *graph, DsaturData data) {
             k = k + 1;
             int sz = graph->size();
             if (k == sz) {  //not k > n, because colored nodes goes from 0..n-1
-                q = max_colors;
-                if (q == w) return q;
+                int mm = -1;
+                for (int i = 0; i < nodes->size(); i++) 
+                    mm = std::max(mm, (*nodes)[i]->getColor());
+                assert(mm==max_colors);
+                q = mm;
+                if (q == w) return q; 
                 k = 0;  //determine k as the minimal rank among all q-colored
                 for (; k < sz && (*nodes)[k]->getColor() != q; k++);
                 for (int i = k; i < sz; i++) (*labels)[ (*nodes)[i]->getId() ] = -1;

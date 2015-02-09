@@ -76,10 +76,9 @@ int Node::getUncolDegree() {
 void Node::addAdjacent(Node *a) {
     std::pair<std::map<int,Node*>::iterator,bool> ret;
     ret = this->adjecents->insert(std::pair<int, Node*>(a->getId(),a));
-    if (!ret.second) {
-        std::cout << "Error inserting element into map" << std::endl;
-    }
-    this->degree++;
+    if (ret.second) 
+        this->degree++;
+    
 }
 
 bool Node::isAdjacent(Node *n1) { return this->isAdjacent(n1->getId()); }
