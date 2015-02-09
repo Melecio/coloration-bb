@@ -25,6 +25,8 @@ int main(int argc, char *argv[]) {
 
     std::cout << get_clique_size(data) << std::endl;
 
+    Brelaz(g, data);
+
     // std::cout << g->toString() << std::endl;
 
     delete g;

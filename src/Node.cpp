@@ -11,7 +11,7 @@ Node::Node(int degree, int id, int max_colors) {
     this->id = id;
     this->adjecents = new std::map<int,Node*>();
     this->colors    = new std::vector<bool>(max_colors, false);
-    }
+}
 
 Node::~Node() {
     delete adjecents;
@@ -25,6 +25,8 @@ int Node::getId() { return this->id; }
 void Node::setId(int id) { this->id = id; }
 
 int Node::getColor() { return this->color; }
+
+std::map<int, Node*> *Node::getAdjacents() { return this->adjecents; }
 
 int Node::getSaturDegree() { return this->satur_degree; }
 
@@ -48,6 +50,8 @@ int Node::setColor() {
 
     return this->color;
 }
+
+void Node::setColor(int i) { this->color = i; }
 
 void Node::setSaturation(int color) {
     std::vector<bool> *v = this->colors;
@@ -77,6 +81,10 @@ void Node::addAdjacent(Node *a) {
     }
     this->degree++;
 }
+
+bool Node::isAdjacent(Node *n1) { return this->isAdjacent(n1->getId()); }
+
+bool Node::isAdjacent(int x) { return adjecents->find(x) != adjecents->end(); }
 
 std::string Node::toString() {
     std::string str = "";

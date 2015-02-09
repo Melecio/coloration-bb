@@ -37,14 +37,21 @@ class Node {
 
         int setColor();
 
+        void setColor(int);
+
+        std::map<int, Node*> *getAdjacents(); 
+
         int getUncolDegree();
 
         int getSaturDegree();
 
         void setSaturation(int color);
 
-
         void addAdjacent(Node *);
+
+        bool isAdjacent(Node *);
+
+        bool isAdjacent(int);
 
         /**
          * Returns printable information about the node and its adjacent nodes
