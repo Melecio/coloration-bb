@@ -17,17 +17,8 @@ int main(int argc, char *argv[]) {
 
     DsaturData data = dsatur(g);
 
-    // std::vector<Node*> *col_order = data.col_order;
-
-    // for(unsigned i = 0; i < col_order->size(); ++i) {
-    //     std::cout << (*col_order)[i]->toString() << std::endl;
-    // }
-
-    // std::cout << get_clique_size(data) << std::endl;
-
-    Brelaz(g, data);
-
-    // std::cout << g->toString() << std::endl;
+    std::cout << get_clique_size(data) << std::endl;
+    std::cout << Brelaz(g, data) << std::endl;
 
     delete g;
 }
