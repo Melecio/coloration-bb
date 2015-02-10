@@ -64,7 +64,7 @@ int get_clique_size(DsaturData data) {
 
 int get_uk(std::vector<Node *> *nodes, int k) {
     int imax = -1;
-    for (unsigned i = 0; i < k; i++) 
+    for (unsigned i = 0; i < k; i++)
         imax = std::max(imax, (*nodes)[i]->getColor());
 
     return imax;
@@ -110,9 +110,13 @@ void set_label(std::vector<bool> *labels, std::vector<Node *> *nodes, int k) {
 
 int Brelaz(Graph *graph, DsaturData data) {
     std::vector<Node*> *nodes = data.col_order;
+
+    assert(isValidColoration(nodes));
+
+
     int w = get_clique_size(data); //number of vertex of the clique
     int q = data.r;   //max color used
-    if (q == w) return q; 
+    if (q == w) return q;
     int k = w;        //because indexed in 0
     bool back = false;
     std::vector< std::vector<int> *> *nodes_uxk = new std::vector< std::vector<int> *>();
@@ -162,10 +166,10 @@ int Brelaz(Graph *graph, DsaturData data) {
             int sz = graph->size();
             if (k == sz) {  //not k > n, because colored nodes goes from 0..n-1
                 q = -1;
-                for (int i = 0; i < nodes->size(); i++) 
+                for (int i = 0; i < nodes->size(); i++)
                     q = std::max(q, (*nodes)[i]->getColor());
 
-                if (q == w) return q; 
+                if (q == w) return q;
                 k = 0;  //determine k as the minimal rank among all q-colored
                 for (; k < sz && (*nodes)[k]->getColor() != q; k++);
                 for (int i = k; i < sz; i++) (*labels)[ (*nodes)[i]->getId() ] = false;
@@ -185,4 +189,24 @@ int Brelaz(Graph *graph, DsaturData data) {
             if (k <= w - 1) return q;
         }
     }
+}
+
+bool isValidColoration(std::vector<Node*> *nodes) {
+    std::vector<Node*>::iterator it = nodes->begin();
+
+    for(; it != nodes->end(); ++it) {
+        Node *node = *it;
+        std::map<int, Node*> *adj = node->getAdjacents();
+        std::map<int, Node*>::iterator itm = adj->begin();
+
+        for(; itm != adj->end(); ++itm) {
+            Node *node_adj = (*itm).second;
+
+            if (node->getColor() == node_adj->getColor()) {
+                return false;
+            }
+        }
+    }
+
+    return true;
 }

@@ -16,6 +16,8 @@ bool dsatur_compare(Node *, Node *);
 
 int get_clique_size(DsaturData d);
 
-int Brelaz(Graph *graph, DsaturData data); 
+int Brelaz(Graph *graph, DsaturData data);
+
+bool isValidColoration(std::vector<Node*> *nodes);
 
 #endif // ALGORITHMS_H
