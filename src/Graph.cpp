@@ -36,6 +36,9 @@ size_t Graph::size() {
 }
 
 void Graph::addEdge(int a, int b) {
+    if(a == b)
+        return;
+
     std::vector<Node *> *v = this->nodes;
     Node *a_node = (*v)[a-1];
     Node *b_node = (*v)[b-1];
