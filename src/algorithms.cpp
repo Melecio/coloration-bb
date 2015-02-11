@@ -43,11 +43,11 @@ bool dsatur_compare(Node *a, Node *b) {
     if (a->isColored())
         return false;
 
-   // if (a->getSaturDegree() != b->getSaturDegree()) {
-        return a->getSaturDegree() > b->getSaturDegree();
-   // } else {
-   //     return a->getUncolDegree() > b->getUncolDegree();
-   // }
+   if (a->getSaturDegree() != b->getSaturDegree()) {
+     return a->getSaturDegree() > b->getSaturDegree();
+   } else {
+       return a->getUncolDegree() > b->getUncolDegree();
+   }
 }
 
 
@@ -143,6 +143,8 @@ int Brelaz(Graph *graph, DsaturData data) {
     for (int i = 0; i < w; i++) (*labels)[ (*nodes)[i]->getId() ] = true;
 
     assert(graph->size()==nodes->size());
+
+    q = graph->size();
 
     while (1) {
         //this is for taking track of the amount of colors used
