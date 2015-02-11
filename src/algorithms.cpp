@@ -2,6 +2,12 @@
 #include <algorithm>
 #include "algorithms.h"
 
+/**
+ * Dsatur heuristic
+ * @param A graph g
+ * @return A DsaturData
+ */
+
 DsaturData dsatur(Graph *g) {
     int max_color = -1;
     std::vector<Node*> *nodes = new std::vector<Node*>();
@@ -33,9 +39,23 @@ DsaturData dsatur(Graph *g) {
     return data;
 }
 
+/**
+ * Comparition function for sorting nodes by degree
+ * @param Node *a
+ * @param Node *b
+ * @return true, if a has higher degree than b. False in any other case
+ */
+
 bool degree_compare(Node *a, Node *b) {
     return a->getDegree() > b->getDegree();
 }
+
+/**
+ * Comparition function for sorting nodes by saturation degree and other rules 
+ * @param Node *a
+ * @param Node *b
+ * @return true, if a has to be place before b. False in any other case
+ */
 
 bool dsatur_compare(Node *a, Node *b) {
     if (b->isColored())
@@ -50,6 +70,11 @@ bool dsatur_compare(Node *a, Node *b) {
    }
 }
 
+/**
+ * Returns the number of nodes of a cloque
+ * @param DsaturData data
+ * @return Number of nodes (w) in the clique between 0..w-1
+ */
 
 int get_clique_size(DsaturData data) {
     std::vector<Node*> *nodes = data.col_order;
@@ -61,6 +86,12 @@ int get_clique_size(DsaturData data) {
     return d;
 }
 
+/**
+ * Returns the number of colors in a partial solution
+ * @param vector<nodes *> *nodes  (nodes)
+ * @param int k   (delimiter the partial solution)
+ * @return the number of colors used between 0 and k-1 
+ */
 
 int get_uk(std::vector<Node *> *nodes, int k) {
     int imax = -1;
@@ -69,6 +100,14 @@ int get_uk(std::vector<Node *> *nodes, int k) {
 
     return imax;
 }
+
+/**
+ * Returns a vector of colors that can be used by a node
+ * @param vector<nodes *> *nodes  (nodes)
+ * @param int k   (delimiter the partial solution)
+ * @param int imin  (maximum color)
+ * @return a list with the colors that can be used by  k-th node in nodes 
+ */
 
 std::vector<int> *get_Uxk(std::vector<Node *> *nodes, int k, int imin) {
     std::vector<int> *aux = new std::vector<int>();
@@ -91,6 +130,14 @@ std::vector<int> *get_Uxk(std::vector<Node *> *nodes, int k, int imin) {
     return Uxk;
 }
 
+/**
+ * Sets label
+ * @param vector<bool> *labels 
+ * @param vector<nodes *> *nodes  (nodes)
+ * @param int k   (delimiter the partial solution)
+ * Sets to true labels between 0..k-1 that achieve the properties
+ */
+
 void set_label(std::vector<bool> *labels, std::vector<Node *> *nodes, int k) {
     Node *Xk = (*nodes)[k];   //k-th node
     std::vector<bool> colors;
@@ -108,6 +155,14 @@ void set_label(std::vector<bool> *labels, std::vector<Node *> *nodes, int k) {
     }
 }
 
+/**
+ * Tells if a sequence of node between 0 and w-1 is a clique
+ * @param vector<nodes *> *nodes  (nodes)
+ * @param int w 
+ * @returns True, if the sequence 0, 1, ..., w-1 is a clique. 
+ *          False in any other case
+ */
+
 bool isClique(std::vector<Node *> *nodes, int w) {
    for (int i = 0; i < w; i++) {
       for (int k = 0; k < w; k++) {
@@ -117,6 +172,13 @@ bool isClique(std::vector<Node *> *nodes, int w) {
    }
    return true;
 }
+
+/**
+ * Returns the chromatic color of a graph with Brelaz algorithm
+ * @param Graph *graph
+ * @param DsaturData data
+ * @returns chromatic color of a graph
+ */
 
 int Brelaz(Graph *graph, DsaturData data) {
     std::vector<Node*> *nodes = data.col_order;
@@ -203,6 +265,12 @@ int Brelaz(Graph *graph, DsaturData data) {
         }
     }
 }
+
+/**
+ * Tells if a graph has a valid coloration
+ * @param Graph *graph
+ * @returns true if graph has a valid coloration. False in any other case
+ */
 
 bool isValidColoration(std::vector<Node*> *nodes) {
     std::vector<Node*>::iterator it = nodes->begin();

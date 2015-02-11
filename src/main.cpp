@@ -13,7 +13,6 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    std::cout << "----------------" << std::endl;
     std::cout << argv[1] << std::endl;
 
     Graph *g = parse_DIMACS(argv[1]);
@@ -27,9 +26,8 @@ int main(int argc, char *argv[]) {
     assert(isValidColoration(data.col_order));
     assert(isClique(data.col_order, w));
 
-    std::cout << data.r << std::endl;
+    std::cout << "Cota superior = " <<  data.r << std::endl;
     std::cout << "coloracion = " <<  Brelaz(g, data) << std::endl;
-    std::cout << "----------------" << std::endl;
 
     delete g;
 }

@@ -1,34 +1,71 @@
 #include <iostream>
 #include "Node.h"
-
+/** 
+  * Class Construnctor 
+  */
 Node::Node(int degree) {
     this->degree = degree;
     this->adjecents = new std::map<int,Node*>();
 }
-
+/** 
+  * Class Construnctor 
+  */
 Node::Node(int degree, int id, int max_colors) {
     this->degree = degree;
     this->id = id;
     this->adjecents = new std::map<int,Node*>();
     this->colors    = new std::vector<bool>(max_colors+1, false);
 }
-
+/** 
+  * Class Destructor
+  */
 Node::~Node() {
     delete adjecents;
     delete colors;
 }
 
+/** 
+  * Returns its degree 
+  * @return its degree
+  */
+
 int Node::getDegree() { return this->degree; }
 
-int Node::getId() { return this->id; }
+/** 
+  * Returns its id
+  * @return its id  
+  */
 
+int Node::getId() { return this->id; }
+/** 
+  * Sets an id
+  */
 void Node::setId(int id) { this->id = id; }
+
+/**
+  * Returns its color
+  * @returns its color
+  */
 
 int Node::getColor() { return this->color; }
 
+/**
+  * Returns the list of nodes that are adjacents to it 
+  * @returns list of adjacents nodes
+  */
+
 std::map<int, Node*> *Node::getAdjacents() { return this->adjecents; }
 
+/**
+  * Returns the saturation degree
+  * @returns saturation degree
+  */
 int Node::getSaturDegree() { return this->satur_degree; }
+
+/**
+  * Sets the lower color that can be selected
+  * @returns the color
+  */
 
 int Node::setColor() {
     int color = 0;
@@ -51,7 +88,18 @@ int Node::setColor() {
     return this->color;
 }
 
+/**
+  * Sets i as the color to the node 
+  * @param int i (color)
+  */
+
 void Node::setColor(int i) { this->color = i; }
+
+/**
+  * Increments the saturation degree if there isn't any adjacent that 
+  * already has the color
+  * @param int color (color)
+  */
 
 void Node::setSaturation(int color) {
     std::vector<bool> *v = this->colors;
@@ -59,6 +107,11 @@ void Node::setSaturation(int color) {
         satur_degree++;
     (*v)[color] = true;
 }
+
+/**
+  * Tells the number of adjacents that doesn't have been colored
+  * @returns the number of adjacents that doesn't have been colored
+  */
 
 int Node::getUncolDegree() {
     std::map<int,Node*>::iterator it = this->adjecents->begin();
@@ -73,6 +126,11 @@ int Node::getUncolDegree() {
     return this->uncol_degree;
 }
 
+/**
+  * Add a node as adjacent
+  * @param Node *a (node to be added as adjacent)
+  */
+
 void Node::addAdjacent(Node *a) {
     std::pair<std::map<int,Node*>::iterator,bool> ret;
     ret = this->adjecents->insert(std::pair<int, Node*>(a->getId(),a));
@@ -81,9 +139,26 @@ void Node::addAdjacent(Node *a) {
     
 }
 
+/**
+  * Check if a node is adjacent
+  * @param Node *n1 
+  * @return true, if n1 is adjacent. False, in any other case
+  */
+
 bool Node::isAdjacent(Node *n1) { return this->isAdjacent(n1->getId()); }
 
+/**
+  * Check if a node is adjacent
+  * @param int x  (id of some node)
+  * @return true, if x is adjacent. False, in any other case
+  */
+
 bool Node::isAdjacent(int x) { return adjecents->find(x) != adjecents->end(); }
+
+/**
+  * Returns string representation of the node
+  * @return string represenationt
+  */
 
 std::string Node::toString() {
     std::string str = "";
@@ -103,4 +178,9 @@ std::string Node::toString() {
     return str;
 }
 
-bool Node::isColored() { return this->color != -1; }
+/**
+  * Checks if is colored
+  * @return true, if this color > 0. false in any other case
+  */
+
+bool Node::isColored() { return this->color > 0; }
