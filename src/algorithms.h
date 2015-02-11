@@ -20,4 +20,6 @@ int Brelaz(Graph *graph, DsaturData data);
 
 bool isValidColoration(std::vector<Node*> *nodes);
 
+bool isClique(std::vector<Node*> *, int);
+
 #endif // ALGORITHMS_H

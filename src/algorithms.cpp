@@ -43,11 +43,11 @@ bool dsatur_compare(Node *a, Node *b) {
     if (a->isColored())
         return false;
 
-    if (a->getSaturDegree() != b->getSaturDegree()) {
+   // if (a->getSaturDegree() != b->getSaturDegree()) {
         return a->getSaturDegree() > b->getSaturDegree();
-    } else {
-        return a->getUncolDegree() > b->getUncolDegree();
-    }
+   // } else {
+   //     return a->getUncolDegree() > b->getUncolDegree();
+   // }
 }
 
 
@@ -108,13 +108,25 @@ void set_label(std::vector<bool> *labels, std::vector<Node *> *nodes, int k) {
     }
 }
 
+bool isClique(std::vector<Node *> *nodes, int w) {
+   for (int i = 0; i < w; i++) {
+      for (int k = 0; k < w; k++) {
+         if (i == k) continue;
+         if (! (*nodes)[i]->isAdjacent((*nodes)[k])) return false;
+      }
+   }
+   return true;
+}
+
 int Brelaz(Graph *graph, DsaturData data) {
     std::vector<Node*> *nodes = data.col_order;
 
     assert(isValidColoration(nodes));
 
-
     int w = get_clique_size(data); //number of vertex of the clique
+
+    assert(isClique(nodes, w));
+
     int q = data.r;   //max color used
     if (q == w) return q;
     int k = w;        //because indexed in 0
@@ -185,7 +197,7 @@ int Brelaz(Graph *graph, DsaturData data) {
             for (; k >= 0 && ((*labels)[ (*nodes)[k]->getId() ] == false); k--);
             assert(k>=0);
             //k is in the clique, so you can't get a better solution
-            if (k <= w - 1) return q;
+            if (k <= w-1) return q;
         }
     }
 }

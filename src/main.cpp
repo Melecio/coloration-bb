@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include <cassert>
 #include "utils.h"
 #include "Graph.h"
 #include "algorithms.h"
@@ -21,8 +22,13 @@ int main(int argc, char *argv[]) {
     DsaturData data = dsatur(g);
 
 
-    std::cout << get_clique_size(data) << std::endl;
-    std::cout << Brelaz(g, data) << std::endl;
+    int w = get_clique_size(data);
+
+    assert(isValidColoration(data.col_order));
+    assert(isClique(data.col_order, w));
+
+    std::cout << data.r << std::endl;
+    std::cout << "coloracion = " <<  Brelaz(g, data) << std::endl;
     std::cout << "----------------" << std::endl;
 
     delete g;
